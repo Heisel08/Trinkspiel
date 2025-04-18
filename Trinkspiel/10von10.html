@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 von 10 – Trinkspiel</title>
+  <style>
+    body {
+      background-color: lightgrey;
+      font-family: Arial;
+    }
+
+    .WeißeBox {
+      background-color: white;
+      border-radius: 10px;
+      width: 400px;
+      text-align: center;
+      padding: 30px;
+      margin: 50px auto;
+    }
+
+    .Frage {
+      font-size: 20px;
+      margin: 20px 0;
+    }
+
+    .Info {
+      color: grey;
+      font-size: 14px;
+    }
+
+    .Button {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="WeißeBox">
+    <h1>Er/Sie ist eine 10, aber...</h1>
+    <p class="Frage" id="frageText">Drücke Enter, um zu beginnen!</p>
+    <button class="Button" onclick="zurueck()">Zurück zum Anfang</button>
+  </div>
+
+  <script>
+    const fragen = [
+      "Er ist eine 10, aber er hat einen TikTok für seinen Hund.",
+      "Sie ist eine 10, aber sie nennt Bier 'Hopfentee'.",
+      "Er ist eine 10, aber er duscht nur einmal pro Woche.",
+      "Sie ist eine 10, aber sie sagt 'lol' statt zu lachen.",
+      "Er ist eine 10, aber er hat noch ein Harry Potter-Poster überm Bett.",
+      "Sie ist eine 10, aber sie hört True Crime zum Einschlafen.",
+      "Er ist eine 10, aber er schreibt seine Ex immer noch 'nur so'.",
+      "Sie ist eine 10, aber sie hat sechs Katzen mit Instagram-Accounts.",
+      "Er ist eine 10, aber er trägt Crocs zu jedem Anlass.",
+      "Sie ist eine 10, aber sie klatscht beim Lachen laut in die Hände."
+    ];
+
+    let frageIndex = -1;
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        frageIndex = (frageIndex + 1) % fragen.length;
+        document.getElementById("frageText").textContent = fragen[frageIndex];
+      }
+    });
+    function zurueck() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

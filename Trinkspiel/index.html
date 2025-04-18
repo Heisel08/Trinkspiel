@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trinkspiel</title>
+  <style>
+    body {
+      background-color: lightgrey;
+      font-family: Arial;
+    }
+
+    .WeißeBox {
+      background-color: white;
+      border-radius: 10px;
+      width: 400px;
+      text-align: center;
+      padding: 30px;
+      margin: 50px auto;
+    }
+
+    input {
+      padding: 10px 15px;
+      width: 90%;
+    }
+
+    .Button {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .remove-btn {
+      background-color: transparent;
+      border: none;
+      color: grey;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .remove-btn:hover {
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="WeißeBox">
+    <h1>Trinkspiel</h1>
+    <input type="text" id="spielerInput" placeholder="Name des Spielers">
+    <ul id="spielerListe"></ul>
+    <button class="Button" onclick="starteSpiel()">Trinkspiel starten</button>
+  </div>
+
+  <script>
+    let spieler = [];
+
+    // Hinzufügen bei Enter
+    document.getElementById('spielerInput').addEventListener('keydown', function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        let name = document.getElementById('spielerInput').value.trim();
+
+        if (name !== "") {
+          spieler.push(name);
+          updateListe();
+          document.getElementById('spielerInput').value = "";
+        } else {
+          alert('Bitte gib einen Namen ein!');
+        }
+      }
+    });
+
+    function updateListe() {
+      const list = document.getElementById('spielerListe');
+      list.innerHTML = '';
+
+      spieler.forEach(function(name, index) {
+        let li = document.createElement('li');
+        li.textContent = name;
+
+        let removeBtn = document.createElement('button');
+        removeBtn.textContent = 'X';
+        removeBtn.classList.add('remove-btn');
+        removeBtn.onclick = () => {
+          spieler.splice(index, 1);
+          updateListe();
+        };
+
+        li.appendChild(removeBtn);
+        list.appendChild(li);
+      });
+    }
+
+    function starteSpiel() {
+      if (spieler.length === 0) {
+        alert("Bitte füge mindestens einen Spieler hinzu!");
+        return;
+      }
+
+      // Speichern in localStorage
+      localStorage.setItem("spielerListe", JSON.stringify(spieler));
+
+      // Weiter zur Spiel-Seite
+      window.location.href = "spiel.html";
+    }
+  </script>
+</body>
+</html>

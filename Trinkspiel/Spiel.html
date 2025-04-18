@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trinkspiel Auswahl</title>
+  <style>
+    body {
+      background-color: lightgrey;
+      font-family: Arial, sans-serif;
+    }
+
+    .WeißeBox {
+      background-color: white;
+      border-radius: 10px;
+      width: 400px;
+      text-align: center;
+      padding: 30px;
+      margin: 50px auto;
+    }
+
+    .Button {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    #anzeige {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    /* Stellt sicher, dass der Container mit den Buttons immer sichtbar ist */
+    #spielButtonContainer {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="WeißeBox">
+    <h1>Zufälliges Trinkspiel</h1>
+    
+    <button class="Button" onclick="zeigeZufallsspiel()">Trinkspiel starten</button>
+    
+    <p id="anzeige">Klicke auf den Button, um ein Spiel zu generieren!</p>
+    
+    <!-- Hier erscheinen alle Buttons automatisch -->
+    <div id="spielButtonContainer"></div>
+  </div>
+
+  <script>
+    function zeigeZufallsspiel() {
+      const spiele = ["Kings Cup", "Mäxchen", "Er/Sie ist eine 10/10"];
+      
+      // Zufälliges Spiel auswählen
+      const zufall = spiele[Math.floor(Math.random() * spiele.length)];
+
+      // Das Spiel anzeigen
+      document.getElementById("anzeige").textContent = zufall;
+
+      // Den Container leeren, falls vorher ein Button da war
+      const buttonContainer = document.getElementById("spielButtonContainer");
+      buttonContainer.innerHTML = "";
+
+      // Regeln-Button erstellen
+      const reglerButton = document.createElement("button");
+      reglerButton.textContent = "Regeln für dieses Spiel";
+      reglerButton.className = "Button";
+      reglerButton.onclick = function () {
+        zeigeRegeln(zufall);
+      };
+      buttonContainer.appendChild(reglerButton);
+
+      // „Zurück zur Homepage“-Button erstellen (immer sichtbar)
+      const homeButton = document.createElement("button");
+      homeButton.textContent = "Zurück zur Homepage";
+      homeButton.className = "Button";
+      homeButton.onclick = function () {
+        window.location.href = "index.html";  // Hier den Namen deiner Homepage-Datei anpassen
+      };
+      buttonContainer.appendChild(homeButton);
+
+      // Wenn das Spiel "Er/Sie ist eine 10/10" ist, Button anzeigen
+      if (zufall === "Er/Sie ist eine 10/10") {
+        const button = document.createElement("button");
+        button.textContent = 'Zum Spiel "Er/Sie ist eine 10/10"';
+        button.className = "Button";
+        button.onclick = function () {
+          window.location.href = "10von10.html";
+        };
+        buttonContainer.appendChild(button);
+      }
+    }
+
+    // Regeln für das Spiel anzeigen
+    function zeigeRegeln(spiel) {
+      const reglerText = {
+        "Kings Cup": "Kings Cup: Alle Spieler setzen sich im Kreis. Der König zieht eine Karte und führt die entsprechende Aktion aus. Der Rest der Spieler folgt dann den Anweisungen.",
+        "Mäxchen": "Mäxchen: Du würfelst zwei Würfel und tust so, als ob du eine höhere Zahl geworfen hast. Die anderen müssen dir glauben, oder sie trinken!",
+        "Er/Sie ist eine 10/10": "Er/Sie ist eine 10/10: Jeder Spieler wird bewertet, und du musst entscheiden, ob sie 'eine 10' sind oder nicht. Andernfalls musst du trinken."
+      };
+
+      // Die Regel für das aktuelle Spiel in einer alertbox anzeigen
+      alert(reglerText[spiel]);
+    }
+  </script>
+</body>
+</html>
